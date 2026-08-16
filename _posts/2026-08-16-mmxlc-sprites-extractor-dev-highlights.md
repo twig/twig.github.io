@@ -27,7 +27,7 @@ It's been a long time since then so I went and tested a whole suite of new PSX/P
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image22.png" /></td></tr></table>
 
-After looking up guides on [romhacking.net forums](https://www.romhacking.net/forum/index.php?topic=26730.0), I used "Tile Molester" (that name… 🤣) on a few TEX files to try and figure out the data encoding used for the format. To my surprise, the extracted files were all in greyscale\! Searching a bit online showed results pointing back to the DDS format\!
+After looking up guides on [romhacking.net forums](https://www.romhacking.net/forum/index.php?topic=26730.0), I used [TileMolester](https://github.com/toruzz/TileMolester) (that name… 🤣) on a few TEX files to try and figure out the data encoding used for the format. To my surprise, the extracted files were all in greyscale\! Searching a bit online showed results pointing back to the DDS format\!
 
 (TileMolester garbled vs decoded greyscale)
 
@@ -35,13 +35,13 @@ After looking up guides on [romhacking.net forums](https://www.romhacking.net/fo
 
 So it seems our friends at Capcom converted existing graphic files to a different texture format within their MT Framework engine, format `0x07` which correlates to the 32 bits/pixel DDS format (as documented by [RandomTBush's RTB-QuickBMS-Scripts CapcomMTFrameworkSwitch_TEX.bms](https://github.com/RandomTBush/RTB-QuickBMS-Scripts/blob/master/Textures/CapcomMTFrameworkSwitch_TEX.bms)), which I assumed would be RGBA. Good news for me, a simple format after stripping out MT Framework headers means less work.
 
-But why did Tile Molester show images while coming out "blank" when exported? Converting a few more files showed the data was actually there, just at really low opacity. At least now we've got something recognisable to work with, even if its missing colour.
+But why did TileMolester show images while coming out "blank" when exported? Converting a few more files showed the data was actually there, just at really low opacity. At least now we've got something recognisable to work with, even if its missing colour.
 
 (DDS as PNG)
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image24.png" /></td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image39.png" /></td></tr></table>
 
-The next stop was to investigate the COL files, which I assumed contained the palettes required to render these textures. The Tile Molester coders must be wizards, because when I randomly opened up a specific player palette/COL file it immediately showed recognisable colours (player-X colours). BGR555 was the palette format.
+The next stop was to investigate the COL files, which I assumed contained the palettes required to render these textures. The TileMolester coders must be wizards, because when I randomly opened up a specific player palette/COL file it immediately showed recognisable colours (player-X colours). BGR555 was the palette format.
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image2.png" /></td></tr></table>
 
