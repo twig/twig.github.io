@@ -25,15 +25,13 @@ It's been a long time since then so I went and tested a whole suite of new PSX/P
 
 (See [MT Framework ARC/TEX tools](https://docs.google.com/spreadsheets/d/1pMGDMaKutVlnoWPm7iIZ4wvNZdXUaKXK-yOM_8vHoEs/edit?gid=0#gid=0))
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image1.png" /> |
-| :-------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image1.png" /></td></tr></table>
 
 After looking up guides on [romhacking.net forums](https://www.romhacking.net/forum/index.php?topic=26730.0), I used "Tile Molester" (that name… 🤣) on a few TEX files to try and figure out the data encoding used for the format. To my surprise, the extracted files were all in greyscale\! Searching a bit online showed results pointing back to the DDS format\!
 
 (TileMolester garbled vs decoded greyscale)
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image2.png" /> Default when opened | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image3.png" /> View mode: 2-dimensional, Codec: 32bpp ABGR | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image4.png" /> Gotta get the perfect canvas width, multiples of 2 |
-| :---------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image2.png" /> Default when opened</td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image3.png" /> View mode: 2-dimensional, Codec: 32bpp ABGR</td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image4.png" /> Gotta get the perfect canvas width, multiples of 2</td></tr></table>
 
 So it seems our friends at Capcom converted existing graphic files to a different texture format within their MT Framework engine, format `0x07` which correlates to the 32 bits/pixel DDS format (as documented by [RandomTBush's RTB-QuickBMS-Scripts CapcomMTFrameworkSwitch_TEX.bms](https://github.com/RandomTBush/RTB-QuickBMS-Scripts/blob/master/Textures/CapcomMTFrameworkSwitch_TEX.bms)), which I assumed would be RGBA. Good news for me, a simple format after stripping out MT Framework headers means less work.
 
@@ -41,18 +39,15 @@ But why did Tile Molester show images while coming out "blank" when exported? Co
 
 (DDS as PNG)
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image5.png" /> | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image6.png" /> |
-| :-------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image5.png" /></td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image6.png" /></td></tr></table>
 
 The next stop was to investigate the COL files, which I assumed contained the palettes required to render these textures. The Tile Molester coders must be wizards, because when I randomly opened up a specific player palette/COL file it immediately showed recognisable colours (player-X colours). BGR555 was the palette format.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image7.png" /> |
-| :-------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image7.png" /></td></tr></table>
 
 I couldn't see a correlation between the data, so I just manually map the texture image RGB colours to indexes in the palette and hoped for the best. The result is this colourful mess.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image8.png" /> |
-| :-------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image8.png" /></td></tr></table>
 
 ## RMX Challenge 2; Cracking the CLUT (26-29 May)
 
@@ -80,15 +75,13 @@ I quickly put together a script which rendered each 16-colour CLUT row in the CO
 
 (Example of brute-forced coloured images)
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image11.png" /> Experimenting | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image12.png" /> Brute-force each CLUT | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image13.png" /> Stumbled across right one |
-| :----------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
+<table><tr><td align="center"><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image11.png" /> Experimenting</td><td align="center"><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image12.png" /> Brute-force each CLUT</td><td align="center"><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image13.png" /> Stumbled across right one</td></tr></table>
 
 Another thing spotted was that it seemed RGB 0,0,0 (black) was to be skipped, leading to a transparency effect. Simple enough.
 
 Being able to render the whole TEX image with a given CLUT gets us a little bit closer to what we want.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image14.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image14.png" /></td></tr></table>
 
 ## RMX Challenge 3; Building a tool to find palettes (30-31 May)
 
@@ -112,8 +105,7 @@ Other features added later were
 
 Early UX: [MegaMan X Legacy Collection X5 sprite extractor (work in progress)](https://www.youtube.com/watch?v=aR5fTGHuFPU)
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image15.png" /> | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image16.png" /> |
-| :--------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image15.png" /></td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image16.png" /></td></tr></table>
 
 ## RMX Challenge 4; 8bpp sprites and trees (31st May \- 1st Jun)
 
@@ -123,13 +115,11 @@ The actual textures for level images were stored as `format_code = 0x12` which I
 
 Using TileMolester eventually showed me recognisable "tree" data with different encoding settings. A scan of the output data in CSV spreadsheet revealed that entities/characters used RGBA data (32bpp), while stage data was just "A" (8bpp) and easily confirmable in TileMolester. The 8bpp `0x12` format threw me off because I read somewhere the original PSX version was 4bpp, so I assumed it would have been the same for the LC version.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image17.png" /> 15bpp BGR555 | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image18.png" /> In-game screenshot of those trees |
-| :---------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image17.png" /> 15bpp BGR555</td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image18.png" /> In-game screenshot of those trees</td></tr></table>
 
 Let's just say I've never been so excited to see trees before. Another subtle Legacy Collection puzzle piece down\!
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image19.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image19.png" /></td></tr></table>
 
 ## RMX Challenge 5; From single tiles to whole stages (3-11th Jun)
 
@@ -137,13 +127,11 @@ Now for the really hard part… figuring out how the game stitches a stage map t
 
 Interesting trivia; the OCL entry colour mapping for stage tiles needed to be offset by 64 in order to skip the player-character specific palettes. This helped determine which tilemaps to load, avoiding the issue which Acediez ran into with his PSX stage renders
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image20.png" /> | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image21.png" /> |
-| :--------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image20.png" /></td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image21.png" /></td></tr></table>
 
 Hoping for a full stage laid out in PNG, I was sorely disappointed when greeted with stage data formatted as a bunch of stripes. Whyyyyyyyyy\!?
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image22.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image22.png" /></td></tr></table>
 
 Looking deeper into the TehemanX4 code shows stage layout tables at specific offsets of the PSX executable file. The idea of that sounds kinda crazy to me, but if it works then I can't fault it.
 
@@ -181,13 +169,11 @@ Fire it up, scroll through the executable with a preview of what the OMP would l
 
 Wrong (left) vs correct (right) layouts easily verifiable.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image24.png" /> | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image25.png" /> |
-| :--------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image24.png" /></td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image25.png" /></td></tr></table>
 
 Funnily enough, while testing this tool I accidentally stumbled across the correct offset for X5 Crescent Grizzly (st010). For some reason it was really therapeutic to scroll through random junk data until you found the right patterns, so I used this method to find several other stages too.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image26.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image26.png" /></td></tr></table>
 
 Since most of the stage offsets are known now, `explore_omp.py` also reads them for a seamless experience. If you're a completionist type and want to help figure out offsets for the remaining non-stage OMP files, this can be a helpful tool to verify your findings.
 
@@ -197,7 +183,7 @@ The debug overlay let me note down the screen IDs whenever I spotted a few recog
 
 (Probably could have done this more easily by looking more closely at the OMP catalogue and grabbing the screen ID from the index. Oh well, hindsight is 20/20)
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image27.png" /> |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image27.png" /></td></tr></table>
 | :--------------------------------------------------------------------------------------- |
 
 Got curious and used AI to generate a script to extract all PSX X4 layouts based on code from TehemanX4, but that method only worked for X4 because the game had a dedicated section which contained all offset addresses for easy picking. Saved some time, but X5 and X6 still needed to be done manually.
@@ -212,20 +198,17 @@ With the final puzzle piece in place and the offsets all plugged in, `render_sta
 
 With the rendering pipeline working pretty well for X4 and X5, I genuinely thought I would be done once I added some X6 mappings to `game-files.csv`. Hoo boy was I wrong…
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image28.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image28.png" /></td></tr></table>
 
 The moment I plugged in X6's intro stage for rendering, I started questioning my memory of what it was supposed to look like. I know the Eurasia crash hit pretty hard, but surely not this badly?
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image29.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image29.png" /></td></tr></table>
 
 Despite looking very similar to X4 and X5 in-game, it seems like a few things changed under the hood for X6. First up the palette mapping logic was different. Second was a whole heap of garbled tiles, and there also seemed to be a lot of missing data from output.
 
 So I pulled out the trusty `clut_finder.py` tool to do some old fashioned tile/palette mapping. Turns out the stage tile colour offset for X6 is 96, instead of 64 like the other two games. That adjustment made rendering more tolerable. But there were still a bunch of tiles rendered incorrectly.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image30.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image30.png" /></td></tr></table>
 
 Anyways it's been 3 weeks and I'm tired boss… so this time I let AI try to figure it out by itself. Gave it the ideal image, told it to fix the rendering process by finding patterns and explaining why rendering is broken for X6. But it just burned a tonne of tokens without returning anything useful. Prompt roulette, guess you win some, you lose some eh? I figured the trick with prompting is you gotta be more specific and target sections with similar issues with relevant data sets to untangle the ball.
 
@@ -235,8 +218,7 @@ Another garbled tiles issue on Metal Shark's stage which took longer to discover
 
 (X6 intro stage proper render after tilemap/palette fixes and finding the right layout)
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image31.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image31.png" /></td></tr></table>
 
 ## RMX Challenge 8; Transparency fights back (22-26th Jun)
 
@@ -246,8 +228,7 @@ Investigated an issue where lots of tiles had inconsistent transparency (black b
 
 The root cause came down to an incorrect assumption I made at the start of the project, ignoring tiles which had RGB of 0,0,0 for black to emulate transparency. Once I got AI to analyse a few dozen tiles which exhibited these black boxes, it discovered there was an unused bit _`0x`_`4000` in OMP tiles data which could be used to determine use of PSX semi-transparency (STP). So the renderer was updated to halve the alpha values accordingly when this bit was detected.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image32.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image32.png" /></td></tr></table>
 
 Surprisingly this led to fixes across all 3 games\! Knowing when to actually apply transparency fixed the black box issue plaguing output files. Another side-effect was that most stages had some form of transparency used even if it wasn't clearly visible at a glance.
 
@@ -257,30 +238,25 @@ Surprisingly this led to fixes across all 3 games\! Knowing when to actually app
 
 Things are starting to look pretty good now\!
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image33.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image33.png" /></td></tr></table>
 
 ## RMX Challenge 9; Animated waterfalls (28th Jun \- 6th July)
 
 After the transparency fix there was only one glaring rendering bug remaining; animated water on X4's Web Spider stage. Why were they green, pink and orange\!?
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image34.png" /> |
-| :--------------------------------------------------------------------------------------: |
+<table><tr><td align="center"><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image34.png" /></td></tr></table>
 
 I knew it had something to do with palette swapping, an elegant technique to reduce artist workload and disc/memory storage.
 
 But how to marry the data up to the colours? For some reason the OCL data was mapping to an incorrect CLUT in the main palette. I could see the wrong colours in `col01_0X_eng.col` at the specified CLUT index, but the right colours for water are staring right at me in `st1_0.col`\!
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image35.png" /> | <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image36.png" /> |
-| :--------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image35.png" /></td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image36.png" /></td></tr></table>
 
 After some deliberation, I decided it shouldn't really matter how it works for in-game as for this project we only really need one colour mapped as PNGs are static. So what I ended up doing was manually overriding the target row in `col*.col` with the desired palette from `st*.col`.
 
 Limit the effect to a given stage and call it a day. This method was used to fix X4's Web Spider (Area 1 and 2), X5 Spike Rosered's puddles and X6 intro stage background.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image37.png" /> |
-| ---------------------------------------------------------------------------------------- |
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image38.png" /> |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image37.png" /></td></tr><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image38.png" /></td></tr></table>
 
 What I suspect the game does is keep the one CLUT-index for those tiles but change the palette in-memory to simulate an animation without the need for extra sprites.
 
@@ -292,7 +268,7 @@ But now the time has come to stack them together to see what happens. Surprising
 
 And with that done, I started cleaning up the code and writing this release post.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image39.png" /> |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image39.png" /></td></tr></table>
 | :--------------------------------------------------------------------------------------- |
 
 ## RMX Challenge 11; Encore\! Patching out in-game parallax (7-18th July)
@@ -301,8 +277,7 @@ While looking for example images to show in the blog post, I noticed that the X4
 
 Something was off and I spent a lot of time manually scanning for an alternative offset or checking the source of TehemanX4 Editor to verify if the PSX offset was correct. But the more I verified, the more I was certain this was the correct layout table offset. Nothing else even came remotely close to this when output is composed.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image40.png" /> Even the PSX stage layout matched this information as shown in TehemanX4 Editor |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image40.png" /> Even the PSX stage layout matched this information as shown in TehemanX4 Editor</td></tr></table>
 
 So what's wrong with it? I watched a gameplay clip of this area again and realised immediately what the issue was. The intro section applied foreground parallaxing, so the layer 0 and layer 1 positions needed to be adjusted accordingly for a smooth effect.
 
@@ -310,8 +285,7 @@ But X4 devs achieved that by introducing gaps in the layout table. Did the game 
 
 Again, given some more thought I came to the same conclusion as before; it doesn't really matter because this is a static render. So I simply patched the layout table specifically for this area on read, commented on it then called it a day.
 
-| <img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image41.png" /> |
-| :--------------------------------------------------------------------------------------- |
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image41.png" /></td></tr></table>
 
 ## Wrapping it all up (28th Jun \- 16th Aug)
 
