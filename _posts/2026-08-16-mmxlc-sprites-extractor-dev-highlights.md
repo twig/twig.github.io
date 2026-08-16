@@ -184,7 +184,6 @@ The debug overlay let me note down the screen IDs whenever I spotted a few recog
 (Probably could have done this more easily by looking more closely at the OMP catalogue and grabbing the screen ID from the index. Oh well, hindsight is 20/20)
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image12.png" /></td></tr></table>
-| :--------------------------------------------------------------------------------------- |
 
 Got curious and used AI to generate a script to extract all PSX X4 layouts based on code from TehemanX4, but that method only worked for X4 because the game had a dedicated section which contained all offset addresses for easy picking. Saved some time, but X5 and X6 still needed to be done manually.
 
@@ -269,7 +268,6 @@ But now the time has come to stack them together to see what happens. Surprising
 And with that done, I started cleaning up the code and writing this release post.
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image20.png" /></td></tr></table>
-| :--------------------------------------------------------------------------------------- |
 
 ## RMX Challenge 11; Encore\! Patching out in-game parallax (7-18th July)
 
@@ -300,9 +298,9 @@ After posting this blog I'm going to find a way to nuke the progress-baseline as
 Hope you've enjoyed the highlights recap\!
 
 <table><tr>
-<td>[X5](https://www.youtube.com/watch?v=0zRf8yxciSM)</td>
-<td>[X6](https://www.youtube.com/watch?v=RpQbzLG6SCg)</td>
-<td>[X4](https://www.youtube.com/watch?v=QTL9bPWUePs)</td>
+<td><iframe width="500" height="300" data-id="X5" src="https://www.youtube.com/embed/0zRf8yxciSM" frameborder="0" allowfullscreen></iframe></td>
+<td><iframe width="500" height="300" data-id="X6" src="https://www.youtube.com/embed/RpQbzLG6SCg" frameborder="0" allowfullscreen></iframe></td>
+<td><iframe width="500" height="300" data-id="X4" src="https://www.youtube.com/embed/QTL9bPWUePs" frameborder="0" allowfullscreen></iframe></td>
 </tr></table>
 
 Git cleanup done.
