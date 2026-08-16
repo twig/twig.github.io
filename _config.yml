@@ -1,6 +1,7 @@
 title: twig's GitHub homepage
 description: Details on projects
 # theme: jekyll-theme-minimal
-remote_theme: pages-themes/architect@v0.2.0
+# remote_theme: pages-themes/architect@v0.2.0
+remote_theme: 'jekyll/minima@v2.5.2'
 plugins:
   - jekyll-remote-them
