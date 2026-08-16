@@ -297,11 +297,11 @@ After posting this blog I'm going to find a way to nuke the progress-baseline as
 
 Hope you've enjoyed the highlights recap\!
 
-<table><tr>
-<td><iframe width="500" height="300" data-id="X5" src="https://www.youtube.com/embed/0zRf8yxciSM" frameborder="0" allowfullscreen></iframe></td>
-<td><iframe width="500" height="300" data-id="X6" src="https://www.youtube.com/embed/RpQbzLG6SCg" frameborder="0" allowfullscreen></iframe></td>
-<td><iframe width="500" height="300" data-id="X4" src="https://www.youtube.com/embed/QTL9bPWUePs" frameborder="0" allowfullscreen></iframe></td>
-</tr></table>
+<table>
+<tr><td><iframe width="500" height="300" data-id="X5" src="https://www.youtube.com/embed/0zRf8yxciSM" frameborder="0" allowfullscreen></iframe></td></tr>
+<tr><td><iframe width="500" height="300" data-id="X6" src="https://www.youtube.com/embed/RpQbzLG6SCg" frameborder="0" allowfullscreen></iframe></td></tr>
+<tr><td><iframe width="500" height="300" data-id="X4" src="https://www.youtube.com/embed/QTL9bPWUePs" frameborder="0" allowfullscreen></iframe></td></tr>
+</table>
 
 Git cleanup done.
 
