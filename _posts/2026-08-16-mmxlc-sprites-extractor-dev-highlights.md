@@ -315,6 +315,8 @@ I've still got a tonne of other junk assets I could write about, but gotta draw 
 
 After posting this blog I'm going to find a way to nuke the progress-baseline assets to save \+700MB from the repo. Way too big for a project of this size. Mainly the full render images I used to keep track of progress which I used to make these "timelapse" videos split out by game.
 
+Also [shoutout](https://github.com/twig/megaman-x-legacy-collection-x4-x5-x6-sprite-extractor#references) to Kuumba123, acediez and many others for sharing their learnings and making this all possible in the first place!
+
 Hope you've enjoyed the highlights recap\!
 
 <table>
