@@ -5,8 +5,6 @@ date: 2026-08-16
 categories: mmxlc-sprite-extractor
 ---
 
-# Development highlights for Mega Man X4/X5/X6 Stage Tile Extractor
-
 > Quick link: [megaman-x-legacy-collection-x4-x5-x6-sprite-extractor](https://github.com/twig/megaman-x-legacy-collection-x4-x5-x6-sprite-extractor)
 
 The project started out on a whim on 23rd May 2026 thinking it'd only take a few days but it became much more challenging than expected. I thought ripping images out from the Mega Man X4/X5/X6 Legacy Collection releases would be easy given the process is already known for PSX versions, but as I discovered over the next \~9 weeks Capcom changed more than just the packaging.
@@ -17,7 +15,7 @@ It was taunting me. Assets sitting right there on my PC but nobody had an easy w
 
 (Skip to the end if you just want to see a recap video for each game)
 
-## RMX Challenge 1; Reading recognisable pixels (23-25th May)
+# RMX Challenge 1; Reading recognisable pixels (23-25th May)
 
 I was familiar with extracting from Capcom's ARC archives in the past with clunky CLI tools for the PSX releases, but newer tools like [Watto Game Extractor](https://www.watto.org/game_extractor.html) have made things much easier.
 
@@ -49,7 +47,7 @@ I couldn't see a correlation between the data, so I just manually map the textur
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image31.png" /></td></tr></table>
 
-## RMX Challenge 2; Cracking the CLUT (26-29 May)
+# RMX Challenge 2; Cracking the CLUT (26-29 May)
 
 The next logical step was to figure out how to correctly apply palette colours to images.
 
@@ -83,7 +81,7 @@ Being able to render the whole TEX image with a given CLUT gets us a little bit 
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image7.png" /></td></tr></table>
 
-## RMX Challenge 3; Building a tool to find palettes (30-31 May)
+# RMX Challenge 3; Building a tool to find palettes (30-31 May)
 
 By now I was tired of manually rendering TEX images against CLUT indexes hundreds of times.
 
@@ -107,7 +105,7 @@ Early UX: [MegaMan X Legacy Collection X5 sprite extractor (work in progress)](h
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image41.png" /></td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image30.png" /></td></tr></table>
 
-## RMX Challenge 4; 8bpp sprites and trees (31st May \- 1st Jun)
+# RMX Challenge 4; 8bpp sprites and trees (31st May \- 1st Jun)
 
 As exciting as all these developments have been over the past week I realised that I wasn't making much progress to my actual goal, creating a script which extracts **stage** sprites/tilemaps. So far all I had working was rendering parts of entity sprites (characters, enemies, interactive objects, etc) which used TEX `format_code = 0x07` (32 bits/pixel)
 
@@ -121,7 +119,7 @@ Let's just say I've never been so excited to see trees before. Another subtle Le
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image13.png" /></td></tr></table>
 
-## RMX Challenge 5; From single tiles to whole stages (3-11th Jun)
+# RMX Challenge 5; From single tiles to whole stages (3-11th Jun)
 
 Now for the really hard part… figuring out how the game stitches a stage map together from tiles. From analysing the TehemanX4 Editor rendering pipeline, I learned what the OCL and OMP headers should look like and rendered it out.
 
@@ -155,7 +153,7 @@ I threw that offset into the experimental script and… surprisingly got somethi
 
 But how many bytes to read? What's the length of this array? It's still all guess work…
 
-## RMX Challenge 6; Finding the maps hidden inside the .EXE (5-20th Jun)
+# RMX Challenge 6; Finding the maps hidden inside the .EXE (5-20th Jun)
 
 (I know timelines are starting to overlap, but only because I was interested in fixing different things at the same time. Keeping the sections separated by theme makes for easier reading. And wow where did those 2 weeks go?)
 
@@ -193,7 +191,7 @@ But doing this is **really tedious**, but almost 50 times (25 for X5, 23 for X6)
 
 With the final puzzle piece in place and the offsets all plugged in, `render_stage.py` can finally live up to its name by pulling together everything learned from TEX/COL \> OMP/OCL \> Layout to generate a stage PNG\!
 
-## RMX Challenge 7; Three games, one renderer (14-21st Jun)
+# RMX Challenge 7; Three games, one renderer (14-21st Jun)
 
 With the rendering pipeline working pretty well for X4 and X5, I genuinely thought I would be done once I added some X6 mappings to `game-files.csv`. Hoo boy was I wrong…
 
@@ -219,7 +217,7 @@ Another garbled tiles issue on Metal Shark's stage which took longer to discover
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image8.png" /></td></tr></table>
 
-## RMX Challenge 8; Transparency fights back (22-26th Jun)
+# RMX Challenge 8; Transparency fights back (22-26th Jun)
 
 (Now we're back to a more stable timeline)
 
@@ -239,7 +237,7 @@ Things are starting to look pretty good now\!
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image18.png" /></td></tr></table>
 
-## RMX Challenge 9; Animated waterfalls (28th Jun \- 6th July)
+# RMX Challenge 9; Animated waterfalls (28th Jun \- 6th July)
 
 After the transparency fix there was only one glaring rendering bug remaining; animated water on X4's Web Spider stage. Why were they green, pink and orange\!?
 
@@ -259,7 +257,7 @@ Limit the effect to a given stage and call it a day. This method was used to fix
 
 What I suspect the game does is keep the one CLUT-index for those tiles but change the palette in-memory to simulate an animation without the need for extra sprites.
 
-## RMX Challenge 10; Grand finale, Layer sandwich (7th July)
+# RMX Challenge 10; Grand finale, Layer sandwich (7th July)
 
 Throughout the whole process, I kept the layout output PNG as a single image with 3 separate layers. This made it easy to diff for changes and detect improvements/regressions as tweaks were made.
 
@@ -269,7 +267,7 @@ And with that done, I started cleaning up the code and writing this release post
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image20.png" /></td></tr></table>
 
-## RMX Challenge 11; Encore\! Patching out in-game parallax (7-18th July)
+# RMX Challenge 11; Encore\! Patching out in-game parallax (7-18th July)
 
 While looking for example images to show in the blog post, I noticed that the X4 Web Spider (Area 2\) stage had a rendering issue. The layers just didn't quite align as well as they should.
 
@@ -285,7 +283,7 @@ Again, given some more thought I came to the same conclusion as before; it doesn
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image33.png" /></td></tr></table>
 
-## Wrapping it all up (28th Jun \- 16th Aug)
+# Wrapping it all up (28th Jun \- 16th Aug)
 
 While cleaning up the project, I spent some time refactoring the code a bit to give const names to magic numbers scattered across the codebase, removing process baseline images (they were taking up too much space on git) and wrote up `extract_from_game.py`, a one-shot script to simplify the set up of necessary game assets.
 
