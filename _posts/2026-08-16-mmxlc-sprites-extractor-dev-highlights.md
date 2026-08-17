@@ -238,10 +238,7 @@ Eventually it discovered that the remaining palette issues were due to X6 using 
 
 Another garbled tiles issue on Metal Shark's stage which took longer to discover and figure out was due to different texture routing based on `OCL.tex_page`. In X6, when `tex_page >= 8` means use 8bpp (chr256).
 
-<table>
-<td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/st04b_C_crop.png" /></td>
-</tr></table>
-</table>
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/st04b_C_crop.png" /></td></tr></table>
 
 (X6 intro stage proper render after tilemap/palette fixes and finding the right layout)
 
@@ -293,7 +290,7 @@ Limit the effect to a given stage and call it a day. This method was used to fix
 
 What I suspect the game does is keep the one CLUT-index for those tiles but change the palette in-memory to simulate an animation without the need for extra sprites.
 
-What I discovered later after composing the 3 layers together (next section) was the STP (PSX semi-transparency) effect had to be applied with an additive method rather than alpha transparency. This allowed the water to show up with a much more vibrant colour than with alpha transparency, also leading to a fix for the X4 intro stage glass tubes.
+What I discovered later (after composing the 3 layers together, see next section) was the STP (PSX semi-transparency) effect had to be applied with an additive method rather than alpha transparency. This allowed the water to show up with a much more vibrant colour than with alpha transparency, also leading to a fix for the X4 intro stage glass tubes.
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/x4-intro-tube_compare.png" /></td></tr></table>
 
