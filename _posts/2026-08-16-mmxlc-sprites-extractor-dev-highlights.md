@@ -282,6 +282,13 @@ But how to marry the data up to the colours? For some reason the OCL data was ma
 
 I tried inspecting sprites loaded into VRAM via the emulator, taking snapshots every second to see what colours would show up. None of the colours matched the palette. I was stumped, so I dumped the VRAM and threw AI at it at full capacity. It was useless. Nothing sensible came out from it.
 
+<table><tr>
+<td>
+<img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/watertile_AI-all-good.png" /><br/>
+AI said this was all good. Don't let it cook unattended, it'll burn your house down.
+</td>
+</tr></table>
+
 After some deliberation, I decided it shouldn't really matter how it works for in-game as for this project we only really need one colour mapped as PNGs are static. So what I ended up doing was manually overriding the target row in `col*.col` with the desired palette from `st*.col`.
 
 Limit the effect to a given stage and call it a day. This method was used to fix X4's Web Spider (Area 1 and 2), X5 Spike Rosered's puddles and X6 intro stage background. Things looked "good enough".
