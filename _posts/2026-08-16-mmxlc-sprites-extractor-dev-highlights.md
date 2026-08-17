@@ -230,7 +230,18 @@ Anyways it's been 3 weeks and I'm tired boss… so this time I let AI try to fig
 
 Eventually it discovered that the remaining palette issues were due to X6 using additional data bits in the OCL which weren't used in X4/X5, directing the renderer to use a secondary palette.
 
+<table><tr>
+<td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/st04a_A_crop.png" /></td>
+<td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/st04a_E_crop.png" /></td>
+<td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/st04b_A_crop.png" /></td>
+</tr></table>
+
 Another garbled tiles issue on Metal Shark's stage which took longer to discover and figure out was due to different texture routing based on `OCL.tex_page`. In X6, when `tex_page >= 8` means use 8bpp (chr256).
+
+<table>
+<td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/st04b_C_crop.png" /></td>
+</tr></table>
+</table>
 
 (X6 intro stage proper render after tilemap/palette fixes and finding the right layout)
 
@@ -272,13 +283,19 @@ But how to marry the data up to the colours? For some reason the OCL data was ma
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image4.png" /></td><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image35.png" /></td></tr></table>
 
+I tried inspecting sprites loaded into VRAM via the emulator, taking snapshots every second to see what colours would show up. None of the colours matched the palette. I was stumped, so I dumped the VRAM and threw AI at it at full capacity. It was useless. Nothing sensible came out from it.
+
 After some deliberation, I decided it shouldn't really matter how it works for in-game as for this project we only really need one colour mapped as PNGs are static. So what I ended up doing was manually overriding the target row in `col*.col` with the desired palette from `st*.col`.
 
-Limit the effect to a given stage and call it a day. This method was used to fix X4's Web Spider (Area 1 and 2), X5 Spike Rosered's puddles and X6 intro stage background.
+Limit the effect to a given stage and call it a day. This method was used to fix X4's Web Spider (Area 1 and 2), X5 Spike Rosered's puddles and X6 intro stage background. Things looked "good enough".
 
 <table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image37.png" /></td></tr><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/image27.png" /></td></tr></table>
 
 What I suspect the game does is keep the one CLUT-index for those tiles but change the palette in-memory to simulate an animation without the need for extra sprites.
+
+What I discovered after composing the 3 layers together (next section) was the STP (PSX semi-transparency) effect had to be applied with an additive method rather than alpha transparency. This allowed the water to show up with a much more vibrant colour than with alpha transparency, also leading to a fix for the X4 intro stage glass tubes.
+
+<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/x4-intro-tube_compare.png" /></td></tr></table>
 
 # RMX Challenge 10; Grand finale, Layer sandwich
 
