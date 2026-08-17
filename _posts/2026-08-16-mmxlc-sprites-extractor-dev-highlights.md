@@ -15,7 +15,10 @@ It was taunting me. Assets sitting right there on my PC but nobody had an easy w
 
 ([Skip to the end](#wrapping-it-all-up) if you just want to see a recap video for each game)
 
-<table><tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/banner.png" /></td></tr></table>
+<table>
+<tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/render_stage.png" /></td></tr>
+<tr><td><img src="/assets/posts/2026-08-16-mmxlc-sprite-extractor-dev-highlights/clut_finder.png" /></td></tr>
+</table>
 
 # RMX Challenge 1; Reading recognisable pixels
 
